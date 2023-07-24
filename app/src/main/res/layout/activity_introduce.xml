@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:layout_height="match_parent"
+    android:padding="30dp"
+    >
+    <ImageView
+        android:layout_marginTop="@dimen/_150sdp"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="@dimen/_100sdp"
+        android:src="@drawable/image_robot"
+        />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_24sdp"
+        android:gravity="center"
+
+        />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_15sdp"
+        android:textColor="@color/text_color2"
+        android:gravity="center"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button"
+        android:layout_marginTop="@dimen/_150sdp"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/first_start"
+        android:textSize="@dimen/_22sdp"
+        android:background="@drawable/bg_button"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="@color/white"
+        />
+</LinearLayout>

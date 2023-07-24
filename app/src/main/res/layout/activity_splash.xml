@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/splash_bg_gradiant">
+
+    <ImageView
+        android:id="@+id/ic_logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="211dp"
+        android:src="@drawable/img_water_splash" />
+
+    <TextView
+        android:id="@+id/tv_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ic_logo"
+        android:text="DRINK WATER REMINDER "
+        android:layout_marginTop="@dimen/_30sdp"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="@dimen/_22sdp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        />
+    <TextView
+        android:id="@+id/tv_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_1"
+        android:text="keep hydrated for healthy life"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:fontFamily="@font/roboto_medium"
+        android:textSize="@dimen/_16sdp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        />
+
+    <ProgressBar
+        android:id="@+id/load_file"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_6sdp"
+        android:layout_below="@+id/tv_2"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_195sdp"
+        android:progressDrawable="@drawable/custom_background_bar"
+        android:visibility="visible" />
+
+</RelativeLayout>

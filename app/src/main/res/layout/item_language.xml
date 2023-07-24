@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_40sdp"
+    android:layout_margin="@dimen/_6sdp"
+    android:elevation="@dimen/_2sdp"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    card_view:cardCornerRadius="@dimen/_6sdp"
+    android:paddingHorizontal="@dimen/_10sdp"
+    android:paddingVertical="@dimen/_6sdp">
+
+    <RelativeLayout
+        android:id="@+id/layoutItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:id="@+id/icLang"
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_english_flag"
+            android:visibility="visible"
+            android:layout_marginStart="@dimen/_10sdp"/>
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_toEndOf="@+id/icLang"
+            android:text="English"
+            android:textColor="#000000"
+            android:textSize="16dp"
+            android:fontFamily="@font/roboto_regular"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

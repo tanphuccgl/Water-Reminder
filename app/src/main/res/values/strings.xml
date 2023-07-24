@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">Water Reminder</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="first_start">Next</string>
+    <string name="title_language">Language</string>
+    <string name="gender">Your Gender</string>
+    <string name="weight">Your Weight</string>
+    <string name="wake_up">Wake-up time</string>
+    <string name="bed">Bed time</string>
+    <string name="reminder_first">let\'s  drink some water!</string>
+    <string name="daily_drink">Daily Drink Target</string>
+    <string name="change_cup">Change cup</string>
+    <string name="records">Today\'s records</string>
+    <string name="next_time">Next time</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="reminder_settings">REMINDER SETTINGS</string>
+    <string name="reminder_schedule">Reminder schedule</string>
+    <string name="reminder_sound">Reminder sound</string>
+    <string name="reminder_mode">Reminder mode</string>
+    <string name="further_reminder">Further reminder</string>
+    <string name="still_remind">Still remind when your goal is achieved</string>
+    <string name="general">GENERAL</string>
+    <string name="unit">Unit</string>
+    <string name="intake_goal">Intake goal</string>
+    <string name="personal_data">PERSONAL DATA</string>
+    <string name="language">Language</string>
+    <string name="gender_setting">Gender</string>
+    <string name="weight_setting">Weight</string>
+    <string name="wake_up_time">Wake-up time</string>
+    <string name="other">OTHER</string>
+    <string name="hide_tips">Hide tips on how to drink water</string>
+    <string name="not_work">Why does Drink Water Reminder not work?</string>
+    <string name="reset_data">Reset data</string>
+    <string name="feedback">Feedback</string>
+    <string name="share">Share</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="pref_notification_message_value">Hey… It\'s time to drink some water…</string>
+
+</resources>

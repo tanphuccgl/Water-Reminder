@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:background="#918F8F"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_2sdp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:background="#918F8F"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_2sdp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:background="#918F8F"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_2sdp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:background="#918F8F"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_2sdp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:background="#918F8F"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_2sdp" />
+
+            <ImageView
+                android:id="@+id/img_view"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:src="@drawable/images_glass"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_clock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:text="9:30"
+            android:textColor="@color/black"
+            android:fontFamily="@font/montserrat_bold"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_3sdp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_water"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100ml"
+            android:layout_gravity="center" />
+        <ImageButton
+            android:id="@+id/btnMenu"
+            android:layout_gravity="center|end"
+            android:padding="5dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_ellipsis"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            />
+    </LinearLayout>
+</layout>

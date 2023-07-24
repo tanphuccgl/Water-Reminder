@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.example.waterreminder",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 101,
+      "versionName": "1.0.1",
+      "outputFile": "App_WaterReminder1.0.1_(101)_07.21.2023-release.apk"
+    }
+  ],
+  "elementType": "File"
+}

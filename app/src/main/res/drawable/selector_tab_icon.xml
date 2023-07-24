@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true" android:color="@color/white" /> <!-- Màu khi icon được chọn -->
+    <item android:color="@color/text_color2" /> <!-- Màu khi icon không được chọn -->
+</selector>
