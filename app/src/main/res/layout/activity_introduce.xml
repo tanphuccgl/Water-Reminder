@@ -13,6 +13,19 @@
         android:layout_height="@dimen/_100sdp"
         android:src="@drawable/image_robot"
         />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="@dimen/_150sdp"
+        android:background="@drawable/bg_button"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/first_start"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_22sdp" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_marginTop="@dimen/_6sdp"
@@ -33,16 +46,4 @@
         android:gravity="center"
         />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
-        android:layout_marginTop="@dimen/_150sdp"
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/first_start"
-        android:textSize="@dimen/_22sdp"
-        android:background="@drawable/bg_button"
-        android:fontFamily="@font/roboto_medium"
-        android:textColor="@color/white"
-        />
 </LinearLayout>
