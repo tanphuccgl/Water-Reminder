@@ -1,15 +1,27 @@
 package com.example.waterreminder.database.reminder
 
+import android.Manifest
 import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
+import android.os.SystemClock
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.waterreminder.R
 import com.example.waterreminder.ui.composite_screen.settings.schedule.AlarmBroadcastReceiver
 import com.example.waterreminder.ui.composite_screen.settings.schedule.AlarmBroadcastReceiver.Companion.FRIDAY
 import com.example.waterreminder.ui.composite_screen.settings.schedule.AlarmBroadcastReceiver.Companion.MONDAY
@@ -21,8 +33,14 @@ import com.example.waterreminder.ui.composite_screen.settings.schedule.AlarmBroa
 import com.example.waterreminder.ui.composite_screen.settings.schedule.AlarmBroadcastReceiver.Companion.TUESDAY
 import com.example.waterreminder.ui.composite_screen.settings.schedule.AlarmBroadcastReceiver.Companion.WEDNESDAY
 import com.example.waterreminder.ui.composite_screen.settings.schedule.DayUtil
+import com.example.waterreminder.ui.composite_screen.settings.schedule.NotificationBroadcastReceiver
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @Entity(tableName = "Reminder")
@@ -118,8 +136,43 @@ data class ReminderEntity(
                 alarmPendingIntent
             )
         }
+
+        scheduleNotification(context, calculateAlarmTriggerTime(calendar.timeInMillis))
         this.isStarted = true
     }
+    fun scheduleNotification(context: Context, delayMillis: Long) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, NotificationBroadcastReceiver::class.java).apply {
+            action = "SHOW_NOTIFICATION"
+            putExtra("title", "Đến giờ uống nước rồi")
+            putExtra("message", "Sau khi uống, chạm vào cốc để xác nhận")
+        }
+        val triggerTime = System.currentTimeMillis() + delayMillis
+        println("levi12322 "+(delayMillis))
+
+        val pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
+        } else {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerTime, pendingIntent)
+        }
+    }
+
+
+    fun calculateAlarmTriggerTime(targetTimeInMillis: Long): Long {
+        val currentTimeInMillis = System.currentTimeMillis()
+         if (targetTimeInMillis > currentTimeInMillis) {
+//             println("levi12322 "+(  targetTimeInMillis - currentTimeInMillis))
+             return  targetTimeInMillis - currentTimeInMillis
+
+        } else {
+            println("levi1 "+0);
+            // Nếu thời gian đã chọn nhỏ hơn thời gian hiện tại, trả về 0 hoặc một giá trị âm tương ứng để không đặt báo thức trong quá khứ.
+            // Trong trường hợp này, bạn có thể xử lý theo ý muốn.
+             return  0
+        }
+    }
+
 
     fun cancelAlarm(context: Context) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -161,4 +214,11 @@ data class ReminderEntity(
         return days
     }
 
-}
+
+
+
+    }
+
+
+
+
