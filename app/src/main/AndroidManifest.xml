@@ -81,6 +81,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.STOP_ALARM"/>
             </intent-filter>
         </receiver>
         <receiver
@@ -91,6 +92,7 @@
                 <action android:name="SHOW_NOTIFICATION" />
             </intent-filter>
         </receiver>
+
 
         <service android:name=".ui.composite_screen.settings.schedule.AlarmService" />
         <service android:name=".ui.composite_screen.settings.schedule.RescheduleAlarmsService" />

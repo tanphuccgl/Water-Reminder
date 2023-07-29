@@ -1,15 +1,12 @@
 package com.example.waterreminder.ui.composite_screen.settings.schedule
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.ColumnInfo
 import com.example.waterreminder.base.BaseActivity
 import com.example.waterreminder.database.reminder.ReminderEntity
 import com.example.waterreminder.databinding.ActivityScheduleSettingBinding
@@ -32,7 +29,6 @@ class ScheduleSettingActivity : BaseActivity<ActivityScheduleSettingBinding>() {
     @Inject
     lateinit var adapter: ScheduleSettingAdapter
 
-    private lateinit var reminderEntity:ReminderEntity
 
     private var isRemindersGenerated:Boolean? = null
 
@@ -125,6 +121,7 @@ class ScheduleSettingActivity : BaseActivity<ActivityScheduleSettingBinding>() {
         }
         adapter.clickListener.onItemClickIsSun = {reminderEntity ->
             reminderEntity.isSunday = !reminderEntity.isSunday
+
             viewModel.updateReminder(reminderEntity)
 
         }
@@ -133,14 +130,16 @@ class ScheduleSettingActivity : BaseActivity<ActivityScheduleSettingBinding>() {
             viewModel.deleteReminder(reminderEntity.time)
         }
 
-        adapter.clickListener.onItemClickSwitch = {
-            it.isStarted = !it.isStarted
-            if(it.isStarted){
+        adapter.clickListener.onItemClickSwitch = { reminderEntity ->
+            println("AAA " +reminderEntity.isStarted )
+            if(reminderEntity.isStarted==true){
                 reminderEntity.cancelAlarm(this)
-                viewModel.updateReminder(it)
+                viewModel.updateReminder(reminderEntity.copy(isStarted =false))
+                observe()
             }else{
                 reminderEntity.schedule(this)
-                viewModel.updateReminder(it)
+                viewModel.updateReminder(reminderEntity.copy(isStarted =true))
+                observe()
             }
         }
 
@@ -233,6 +232,8 @@ class ScheduleSettingActivity : BaseActivity<ActivityScheduleSettingBinding>() {
             viewModel.insertReminder(reminderEntity)
             calendar.add(Calendar.HOUR_OF_DAY, 1)
             calendar.add(Calendar.MINUTE, 30)
+//            reminderEntity.schedule(this)
+//            viewModel.updateReminder(reminderEntity)
         }
 
 

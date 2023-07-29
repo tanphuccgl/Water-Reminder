@@ -10,27 +10,36 @@ import java.util.Calendar
 
 class AlarmBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
+        val title1 = intent.getStringExtra("hi")
+        println("phuc123" + title1)
+        if (  title1=="hi" ) {
+            println(11111);
+            val alarmIntent = Intent(context, AlarmService::class.java)
+            context.stopService(alarmIntent)
+            return;
+        }
+        println(1231235335);
         if (Intent.ACTION_BOOT_COMPLETED == intent.action) {
+            println(123335);
             val toastText = String.format("Alarm Reboot")
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
             startRescheduleAlarmsService(context)
         } else {
+            println(12333);
             val toastText = String.format("Alarm Received")
             Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
             if (!intent.getBooleanExtra(RECURRING, false)) {
+                println(1231235332885);
                 startAlarmService(context, intent)
             }
             run {
                 if (alarmIsToday(intent)) {
+                    println(1234588);
                     startAlarmService(context, intent)
                 }
             }
         }
-        val action = intent.action
-        if (action == "STOP_ALARM") {
-            val alarmIntent = Intent(context, AlarmService::class.java)
-            context.stopService(alarmIntent)
-        }
+
     }
 
     private fun alarmIsToday(intent: Intent): Boolean {
