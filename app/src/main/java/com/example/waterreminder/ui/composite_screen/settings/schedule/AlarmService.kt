@@ -30,24 +30,24 @@ class AlarmService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-
-        val sound =  preferenceHelper.getString(PreferenceHelper.PREF_SOUND)
-        if (sound != null) {
-            if(sound.length > 12){
-                try {
-                    mediaPlayer?.setDataSource(sound)
-                    mediaPlayer?.prepare()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }else{
-                mediaPlayer = MediaPlayer.create(this,sound.trim().toInt())
-            }
-        }else{
-            mediaPlayer = MediaPlayer.create(this, R.raw.water_flow)
-        }
-        mediaPlayer!!.isLooping = true
-        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
+//
+//        val sound =  preferenceHelper.getString(PreferenceHelper.PREF_SOUND)
+//        if (sound != null) {
+//            if(sound.length > 12){
+//                try {
+//                    mediaPlayer?.setDataSource(sound)
+//                    mediaPlayer?.prepare()
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                }
+//            }else{
+//           //     mediaPlayer = MediaPlayer.create(this,sound.trim().toInt())
+//            }
+//        }else{
+//            mediaPlayer = MediaPlayer.create(this, R.raw.water_flow)
+//        }
+//        mediaPlayer!!.isLooping = true
+//        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator?
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
@@ -66,15 +66,15 @@ class AlarmService : Service() {
             .setContentIntent(pendingIntent)
             .build()
 
-        mediaPlayer!!.start()
-        val pattern = longArrayOf(0, 100, 1000)
-        vibrator!!.vibrate(pattern, 0)
-        handler = Handler(Looper.getMainLooper())
-        stopMusicRunnable = Runnable {
-            mediaPlayer?.stop()
-            vibrator?.cancel()
-        }
-        handler?.postDelayed(stopMusicRunnable!!, 10000)
+//        mediaPlayer!!.start()
+//        val pattern = longArrayOf(0, 100, 1000)
+//        vibrator!!.vibrate(pattern, 0)
+//        handler = Handler(Looper.getMainLooper())
+//        stopMusicRunnable = Runnable {
+//            mediaPlayer?.stop()
+//            vibrator?.cancel()
+//        }
+//        handler?.postDelayed(stopMusicRunnable!!, 10000)
 
         startForeground(1, notification)
 
