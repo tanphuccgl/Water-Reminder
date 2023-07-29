@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import java.util.Calendar
 
@@ -11,14 +12,23 @@ import java.util.Calendar
 class AlarmBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val title1 = intent.getStringExtra("hi")
-        println("phuc123" + title1)
-        if (  title1=="hi" ) {
-            println(11111);
+        val resultNoti = intent.getIntExtra("result", -1);
+        val resultCancel = intent.getStringExtra("function");
+        Log.d("kDebug", "$resultNoti - $resultCancel")
+        if (resultNoti != -1 && resultCancel != null) {
+            Log.d("kDebug", "StopService")
             val alarmIntent = Intent(context, AlarmService::class.java)
             context.stopService(alarmIntent)
-            return;
+            return
         }
-        println(1231235335);
+//        println("phuc123" + title1)
+//        if (  title1=="hi" ) {
+//            println(11111);
+//            val alarmIntent = Intent(context, AlarmService::class.java)
+//            context.stopService(alarmIntent)
+//            return;
+//        }
+//        println(1231235335);
         if (Intent.ACTION_BOOT_COMPLETED == intent.action) {
             println(123335);
             val toastText = String.format("Alarm Reboot")

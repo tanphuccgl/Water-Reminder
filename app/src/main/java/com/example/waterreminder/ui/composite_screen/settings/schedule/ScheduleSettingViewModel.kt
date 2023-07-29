@@ -1,5 +1,6 @@
 package com.example.waterreminder.ui.composite_screen.settings.schedule
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,6 +24,7 @@ class ScheduleSettingViewModel @Inject constructor(
         viewModelScope.launch {
             val waterReminders = reminderRepository.getReminders()
             _listReminder.postValue(waterReminders)
+
         }
     }
 
@@ -49,6 +51,11 @@ class ScheduleSettingViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             reminderRepository.deleteReminder(date)
             getReminders()
+        }
+    }
+    fun deleteReminderID(id:Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            reminderRepository.deleteReminderID(id)
         }
     }
 }

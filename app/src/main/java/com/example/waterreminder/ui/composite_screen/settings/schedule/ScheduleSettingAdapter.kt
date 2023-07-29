@@ -1,8 +1,12 @@
 package com.example.waterreminder.ui.composite_screen.settings.schedule
 
 import android.annotation.SuppressLint
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +18,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.waterreminder.R
 import com.example.waterreminder.database.reminder.ReminderEntity
 import com.example.waterreminder.databinding.ItemScheduleSettingBinding
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
 @ActivityScoped
 class ScheduleSettingAdapter @Inject constructor(
+   @ApplicationContext val context: Context,
     val clickListener : getClickShedule,
 ): ListAdapter<ReminderEntity, ScheduleSettingAdapter.ViewHolder>(ScheduleSettingDiffCallback()){
 
@@ -37,10 +43,14 @@ class ScheduleSettingAdapter @Inject constructor(
     inner class ViewHolder(private val binding: ItemScheduleSettingBinding):
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(reminderEntity: ReminderEntity, clickListener: getClickShedule) {
-
+        fun bind(reminderEntity: ReminderEntity, clickListener: getClickShedule, position: Int) {
+            var isCheckedTmp = false ;
             binding.tvClock.text = reminderEntity.time
+            val intent = Intent(context, AlarmBroadcastReceiver::class.java)
 
+            var pendingIntent: PendingIntent =  PendingIntent.getBroadcast(context,reminderEntity.id,intent,PendingIntent.FLAG_IMMUTABLE)
+
+            Log.d("kDebug", "$reminderEntity")
             if (reminderEntity.isSunday) {
                 sun = "Sun"
                 binding.rlSun.setBackgroundResource(R.drawable.bg_roll_call_day)
@@ -174,12 +184,28 @@ class ScheduleSettingAdapter @Inject constructor(
                     )
                 )
             }
+            binding.sth.isChecked = reminderEntity.isStarted
+            if (reminderEntity.isStarted) {
+                reminderEntity.schedule(context,pendingIntent)
+                binding.sth.thumbTintList = ColorStateList.valueOf(Color.parseColor("#2196F3"))
+                binding.sth.trackTintList = ColorStateList.valueOf(Color.parseColor("#2196F3"))
+            } else {
+//                reminderEntity.cancelAlarm(context)
+                binding.sth.thumbTintList = ColorStateList.valueOf(Color.WHITE)
+                binding.sth.trackTintList = ColorStateList.valueOf(Color.WHITE)
+            }
 
             binding.sth.setOnCheckedChangeListener { _, isChecked ->
+                Log.d("kDebug", "isChecked= $isChecked")
+                isCheckedTmp = isChecked;
                 if (isChecked) {
+                    reminderEntity.schedule(context,pendingIntent)
+
                     binding.sth.thumbTintList = ColorStateList.valueOf(Color.parseColor("#2196F3"))
                     binding.sth.trackTintList = ColorStateList.valueOf(Color.parseColor("#2196F3"))
                 } else {
+                    reminderEntity.cancelAlarm(context,pendingIntent)
+
                     binding.sth.thumbTintList = ColorStateList.valueOf(Color.WHITE)
                     binding.sth.trackTintList = ColorStateList.valueOf(Color.WHITE)
                 }
@@ -245,7 +271,8 @@ class ScheduleSettingAdapter @Inject constructor(
                 clickListener.onDeleteClick(reminderEntity)
             }
             binding.sth.setOnClickListener {
-                clickListener.onItemClickSwitch(reminderEntity)
+                clickListener.onItemClickSwitch(reminderEntity, isCheckedTmp)
+                notifyItemChanged(position)
             }
         }
     }
@@ -263,7 +290,7 @@ class ScheduleSettingAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item,clickListener)
+        holder.bind(item,clickListener,position)
     }
 
 }
@@ -290,7 +317,7 @@ class getClickShedule @Inject constructor() {
     var onItemClickIsSat: ((ReminderEntity) -> Unit)? = null
     var onItemClickIsSun: ((ReminderEntity) -> Unit)? = null
     var onItemClickClock: ((ReminderEntity) -> Unit)? = null
-    var onItemClickSwitch: ((ReminderEntity) -> Unit)? = null
+    var onItemClickSwitch: ((ReminderEntity, Boolean) -> Unit)? = null
     var onDeleteClick: ((ReminderEntity) -> Unit)? = null
 
     fun onItemClick(data: ReminderEntity) {
@@ -314,8 +341,8 @@ class getClickShedule @Inject constructor() {
         onItemClickIsSun?.invoke(data)
     }fun onItemClickClock(data: ReminderEntity) {
         onItemClickClock?.invoke(data)
-    }fun onItemClickSwitch(data: ReminderEntity) {
-        onItemClickSwitch?.invoke(data)
+    }fun onItemClickSwitch(data: ReminderEntity, status: Boolean) {
+        onItemClickSwitch?.invoke(data,status)
     }
 
     fun onDeleteClick(data: ReminderEntity) {

@@ -1,7 +1,9 @@
 package com.example.waterreminder.ui.composite_screen.settings.schedule
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.os.IBinder
+import androidx.core.view.ContentInfoCompat.Flags
 import androidx.lifecycle.LifecycleService
 import com.example.waterreminder.repository.ReminderRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,7 +20,9 @@ class RescheduleAlarmsService @Inject constructor(
         reminderRepository.selectAll().observe(this){
             for(a in it){
                 if(a.isStarted){
-                    a.schedule(applicationContext)
+                    val intent = Intent(applicationContext, AlarmBroadcastReceiver::class.java)
+
+                    a.schedule(applicationContext, PendingIntent.getBroadcast(applicationContext,a.id,intent,PendingIntent.FLAG_IMMUTABLE))
                 }
             }
         }

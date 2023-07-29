@@ -54,7 +54,10 @@ data class ReminderEntity(
     @ColumnInfo(name = "isStarted")
     var isStarted: Boolean = true,
 ){
-    fun schedule(context: Context) {
+
+
+    fun schedule(context: Context, pendingIntent: PendingIntent) {
+        Log.d("kDebug", "on Schedule ")
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmBroadcastReceiver::class.java)
         intent.action ="BOOT_COMPLETED"
@@ -67,8 +70,6 @@ data class ReminderEntity(
         intent.putExtra(SATURDAY, isSaturday)
         intent.putExtra(SUNDAY, isSunday)
         intent.putExtra(TITLE, time)
-
-        val alarmPendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_IMMUTABLE)
         val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
         val timeString = time
@@ -96,25 +97,26 @@ data class ReminderEntity(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
                 RUN_DAILY,
-                alarmPendingIntent
+                pendingIntent
             )
+        Log.d("kDebug", "finish Schedule id = $id")
 
-
-
-        this.isStarted = true
     }
 
 
 
-    fun cancelAlarm(context: Context) {
+    fun cancelAlarm(context: Context, alarmPendingIntent: PendingIntent) {
+        Log.d("kDebug", "cancelAlarm ")
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmBroadcastReceiver::class.java)
-        val alarmPendingIntent = PendingIntent.getBroadcast(context, id, intent, PendingIntent.FLAG_IMMUTABLE)
-        alarmManager.cancel(alarmPendingIntent)
-        this.isStarted = false
+        intent.putExtra("result",id)
+        intent.putExtra("function","cancel")
+        alarmPendingIntent.cancel()
         val toastText = String.format("Alarm cancelled for %02d:%02d with id %d", 1, 2, id)
         Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show()
         Log.i("cancel", toastText)
+        Log.d("kDebug", "finished cancelAlarm  = $id")
+
     }
 
 

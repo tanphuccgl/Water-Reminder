@@ -9,7 +9,7 @@ import androidx.room.Update
 
 @Dao
 interface ReminderDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertReminder(reminderEntity: ReminderEntity)
 
     @Query("SELECT * FROM Reminder ORDER BY time(time)")
@@ -21,6 +21,8 @@ interface ReminderDao {
     @Query("DELETE FROM Reminder WHERE time = :date")
     suspend fun deleteReminder(date: String)
 
+    @Query("DELETE FROM Reminder WHERE id = :id")
+    suspend fun deleteReminderID(id: Int)
     @Update
     suspend fun updaterReminder(reminderEntity: ReminderEntity)
 

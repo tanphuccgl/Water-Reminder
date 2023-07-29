@@ -27,4 +27,8 @@ class ReminderRepository @Inject constructor(private val reminderDao: ReminderDa
     fun selectAll(): LiveData<List<ReminderEntity>> {
         return reminderDao.selectAll()
     }
+
+    suspend fun deleteReminderID(id: Int) {
+        return reminderDao.deleteReminderID(id)
+    }
 }

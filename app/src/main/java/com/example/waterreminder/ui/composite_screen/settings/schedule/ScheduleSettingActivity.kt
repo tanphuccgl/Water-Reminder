@@ -3,6 +3,7 @@ package com.example.waterreminder.ui.composite_screen.settings.schedule
 import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,12 +58,9 @@ class ScheduleSettingActivity : BaseActivity<ActivityScheduleSettingBinding>() {
         binding.rcv.adapter = adapter
         viewModel.getReminders()
         viewModel.listReminder.observe(this){
+            Log.d("kDebug", "$it")
             adapter.setData(it)
             adapter.notifyDataSetChanged()
-
-           for (reminder in it){
-               reminder.schedule(applicationContext)
-           }
         }
 
         val intentService = Intent(applicationContext, AlarmService::class.java)
@@ -130,17 +128,23 @@ class ScheduleSettingActivity : BaseActivity<ActivityScheduleSettingBinding>() {
             viewModel.deleteReminder(reminderEntity.time)
         }
 
-        adapter.clickListener.onItemClickSwitch = { reminderEntity ->
-            println("AAA " +reminderEntity.isStarted )
-            if(reminderEntity.isStarted==true){
-                reminderEntity.cancelAlarm(this)
-                viewModel.updateReminder(reminderEntity.copy(isStarted =false))
-                observe()
-            }else{
-                reminderEntity.schedule(this)
-                viewModel.updateReminder(reminderEntity.copy(isStarted =true))
-                observe()
+        adapter.clickListener.onItemClickSwitch = { reminderEntity,status ->
+            if (status) {
+//                viewModel.deleteReminderID(reminderEntity.id);
+                viewModel.insertReminder(reminderEntity.copy(isStarted =true))
+            }else {
+//                viewModel.deleteReminderID(reminderEntity.id);
+                viewModel.insertReminder(reminderEntity.copy(isStarted =false))
             }
+//            if(reminderEntity.isStarted){
+//                reminderEntity.cancelAlarm(this)
+
+                //observe()
+ //           }else{
+//                reminderEntity.schedule(this)
+
+                //observe()
+ //           }
         }
 
         dialogTimePicker()
